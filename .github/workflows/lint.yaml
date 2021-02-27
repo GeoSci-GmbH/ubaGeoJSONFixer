@@ -1,0 +1,17 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nbadal/action-ktlint-setup@v1
+        with:
+          ktlint_version: '0.40.0'
+      - name: Lint
+        run: ktlint
