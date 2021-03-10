@@ -2,18 +2,14 @@
 
 val ubaGeoJSONFixRegex = Regex(""""SHAPE\..*": \d*,\d*""")
 
-fun String.fixUBAGeoJSON(): String {
-  return this.replace(ubaGeoJSONFixRegex) {
+fun fixUBAGeoJSON(geoJsonString: String): String {
+  return geoJsonString.replace(ubaGeoJSONFixRegex) {
     it.value.replace(',', '.')
   }
 }
 
-System.`in`.bufferedReader().use {
-  var line = it.readLine()
-
-  while (line != null) {
-    println(line.fixUBAGeoJSON())
-
-    line = it.readLine()
-  }
+System.`in`.bufferedReader().use { reader ->
+  reader.lineSequence()
+    .map(::fixUBAGeoJSON)
+    .forEach(::println)
 }
